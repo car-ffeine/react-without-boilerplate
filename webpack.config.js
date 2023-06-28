@@ -3,6 +3,7 @@ const prod = process.env.NODE_ENV === 'production';
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   mode: prod ? 'production' : 'development',
@@ -39,5 +40,8 @@ module.exports = {
       template: './public/index.html',
     }),
     new MiniCssExtractPlugin(),
+    new webpack.ProvidePlugin({
+      process: 'process/browser.js',
+    }),
   ],
 };
