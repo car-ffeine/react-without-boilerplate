@@ -12,9 +12,25 @@ loader.load().then(async () => {
   const { Map } = (await google.maps.importLibrary(
     'maps'
   )) as google.maps.MapsLibrary;
+
+  const myLatLng = { lat: -34.397, lng: 150.644 };
+
   map = new Map(document.getElementById('map') as HTMLElement, {
-    center: { lat: -34.397, lng: 150.644 },
+    center: myLatLng,
     zoom: 8,
+  });
+
+  new google.maps.Marker({
+    position: myLatLng,
+    map,
+    title: 'Hello World!',
+    icon: 'https://cdn-icons-png.flaticon.com/128/9421/9421782.png',
+  });
+
+  new google.maps.Marker({
+    position: myLatLng,
+    map,
+    title: 'Hello World!',
   });
 });
 
