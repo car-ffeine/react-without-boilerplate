@@ -1,27 +1,31 @@
 import { Status, Wrapper } from '@googlemaps/react-wrapper';
 import { useEffect, useRef, useState } from 'react';
 
-interface MyMapProps {
-  center: google.maps.LatLngLiteral;
-  zoom: number;
-}
-
-const MyMap = ({ center, zoom }: MyMapProps) => {
+const MyMap = () => {
   const ref = useRef(null);
   const [map, setMap] = useState<google.maps.Map>();
 
   const onClick = () => {
-    map.panTo({ lat: 37.5152506538034, lng: 127.10315587642619 });
+    map.setZoom(13);
+    map.panTo({ lat: 38.5152506538034, lng: 127.10315587642619 });
   };
 
   useEffect(() => {
-    setMap(
-      new window.google.maps.Map(ref.current, {
-        center,
-        zoom,
-      })
-    );
-  }, [center, zoom]);
+    // TODO: 현재 위치 잡아와서 넣기 MDN 문서 참조하기
+    const initialCenter = {
+      lat: 37.5056102333107,
+      lng: 127.05081496722168,
+    };
+
+    const initialZoomSize = 14;
+
+    const googleMap = new window.google.maps.Map(ref.current, {
+      center: initialCenter,
+      zoom: initialZoomSize,
+    });
+
+    setMap(googleMap);
+  }, []);
 
   return (
     <>
@@ -36,22 +40,19 @@ const MyMap = ({ center, zoom }: MyMapProps) => {
   );
 };
 
-const render = (status: Status, { center, zoom }: MyMapProps) => {
+const render = (status: Status) => {
   switch (status) {
     case Status.LOADING:
       return <>로딩중...</>;
     case Status.FAILURE:
       return <>에러 발생</>;
     case Status.SUCCESS:
-      return <MyMap center={center} zoom={zoom} />;
+      return <MyMap />;
   }
 };
 
-const MapApp = ({ center, zoom }: MyMapProps) => (
-  <Wrapper
-    apiKey={process.env.GOOGLE_MAP_API_KEY}
-    render={(status) => render(status, { center, zoom })}
-  />
+const MapApp = () => (
+  <Wrapper apiKey={process.env.GOOGLE_MAP_API_KEY} render={render} />
 );
 
 export default MapApp;
