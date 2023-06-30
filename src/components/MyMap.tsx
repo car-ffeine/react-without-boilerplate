@@ -6,8 +6,19 @@ const MyMap = () => {
   const [map, setMap] = useState<google.maps.Map>();
 
   const onClick = () => {
-    map.setZoom(13);
-    map.panTo({ lat: 38.5152506538034, lng: 127.10315587642619 });
+    const bounds = map.getBounds();
+    const center = map.getCenter();
+
+    const deltaX =
+      (bounds.getNorthEast().lng() - bounds.getSouthWest().lng()) / 2;
+    const deltaY =
+      (bounds.getNorthEast().lat() - bounds.getSouthWest().lat()) / 2;
+    const centerX = center.lng();
+    const centerY = center.lat();
+
+    /* 지도의 델타값을 보내줄 수 있다.
+     지도의 center 좌표를 보내줄 수 있다.*/
+    console.log(deltaX, deltaY, centerX, centerY);
   };
 
   useEffect(() => {
