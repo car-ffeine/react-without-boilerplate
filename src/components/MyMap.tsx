@@ -1,5 +1,5 @@
 import { Status, Wrapper } from '@googlemaps/react-wrapper';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface MyMapProps {
   center: google.maps.LatLngLiteral;
@@ -7,16 +7,33 @@ interface MyMapProps {
 }
 
 const MyMap = ({ center, zoom }: MyMapProps) => {
-  const ref = useRef();
+  const ref = useRef(null);
+  const [map, setMap] = useState<google.maps.Map>();
+
+  const onClick = () => {
+    map.panTo({ lat: 37.5152506538034, lng: 127.10315587642619 });
+  };
 
   useEffect(() => {
-    new window.google.maps.Map(ref.current, {
-      center,
-      zoom,
-    });
-  }, []);
+    setMap(
+      new window.google.maps.Map(ref.current, {
+        center,
+        zoom,
+      })
+    );
+  }, [center, zoom]);
 
-  return <div ref={ref} id="map"></div>;
+  return (
+    <>
+      <div ref={ref} id="map"></div>
+      <button
+        style={{ zIndex: 999, position: 'fixed', top: 100, left: 100 }}
+        onClick={onClick}
+      >
+        ㅎㅇㅎㅇ
+      </button>
+    </>
+  );
 };
 
 const render = (status: Status, { center, zoom }: MyMapProps) => {

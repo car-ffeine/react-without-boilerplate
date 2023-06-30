@@ -1,6 +1,7 @@
 import { Loader } from '@googlemaps/js-api-loader';
 import { GlobalStyle } from './style/GlobalStyle';
 import MapApp from './components/MyMap';
+import { useState } from 'react';
 
 // let map: google.maps.Map;
 
@@ -41,14 +42,37 @@ import MapApp from './components/MyMap';
 // });
 
 function App() {
-  const myLatLng = { lat: -34.397, lng: 150.644 };
-  const zoom = 8;
+  const [latLng, setLatLng] = useState<google.maps.LatLngLiteral>({
+    lat: 37.5056102333107,
+    lng: 127.05081496722168,
+  });
+  const [zoom, setZoom] = useState(14);
+
+  const addLat = () => {
+    setLatLng((current) => ({ ...current, lat: current.lat + 1 }));
+  };
+
+  const addLng = () => {
+    setLatLng((current) => ({ ...current, lng: current.lng + 1 }));
+  };
 
   return (
     <>
       <GlobalStyle />
       {/* <div id="map"></div> */}
-      <MapApp center={myLatLng} zoom={zoom} />
+      <MapApp center={latLng} zoom={zoom} />
+      {/* <button
+        onClick={addLat}
+        style={{ zIndex: 999, position: 'fixed', top: 100, left: 100 }}
+      >
+        위도 + 1
+      </button>
+      <button
+        onClick={addLng}
+        style={{ zIndex: 999, position: 'fixed', top: 100, left: 25 }}
+      >
+        경도 + 1
+      </button> */}
     </>
   );
 }
