@@ -23,19 +23,27 @@ const MyMap = () => {
 
   useEffect(() => {
     // TODO: 현재 위치 잡아와서 넣기 MDN 문서 참조하기
-    const initialCenter = {
-      lat: 37.5056102333107,
-      lng: 127.05081496722168,
-    };
 
-    const initialZoomSize = 14;
+    navigator.geolocation.getCurrentPosition((position) => {
+      // const initialCenter = {
+      //   lat: 37.5056102333107,
+      //   lng: 127.05081496722168,
+      // };
 
-    const googleMap = new window.google.maps.Map(ref.current, {
-      center: initialCenter,
-      zoom: initialZoomSize,
+      const initialCenter = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+
+      const initialZoomSize = 14;
+
+      const googleMap = new window.google.maps.Map(ref.current, {
+        center: initialCenter,
+        zoom: initialZoomSize,
+      });
+
+      setMap(googleMap);
     });
-
-    setMap(googleMap);
   }, []);
 
   return (
