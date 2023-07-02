@@ -1,9 +1,12 @@
 import { Status, Wrapper } from '@googlemaps/react-wrapper';
 import { useEffect, useRef, useState } from 'react';
+import { usePosition } from '../hooks/usePosition';
 
 const MyMap = () => {
   const ref = useRef(null);
   const [map, setMap] = useState<google.maps.Map>();
+
+  const initialCenterPosition = usePosition();
 
   const onClick = () => {
     const bounds = map.getBounds();
@@ -22,29 +25,28 @@ const MyMap = () => {
   };
 
   useEffect(() => {
-    // TODO: 현재 위치 잡아와서 넣기 MDN 문서 참조하기
+    if (initialCenterPosition === undefined) return;
 
-    navigator.geolocation.getCurrentPosition((position) => {
-      // const initialCenter = {
-      //   lat: 37.5056102333107,
-      //   lng: 127.05081496722168,
-      // };
+    const initialCenter = {
+      lat: initialCenterPosition.latitude,
+      lng: initialCenterPosition.longitude,
+    };
 
-      const initialCenter = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
+    const initialZoomSize = 16;
 
-      const initialZoomSize = 14;
-
-      const googleMap = new window.google.maps.Map(ref.current, {
-        center: initialCenter,
-        zoom: initialZoomSize,
-      });
-
-      setMap(googleMap);
+    const googleMap = new window.google.maps.Map(ref.current, {
+      center: initialCenter,
+      zoom: initialZoomSize,
     });
-  }, []);
+
+    const centerMarker = new google.maps.Marker({
+      position: initialCenter,
+      title: 'center position',
+      map: googleMap,
+    });
+
+    setMap(googleMap);
+  }, [initialCenterPosition]);
 
   return (
     <>
