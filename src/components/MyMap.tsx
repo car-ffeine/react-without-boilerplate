@@ -55,7 +55,7 @@ const MyMap = () => {
         style={{ zIndex: 999, position: 'fixed', top: 100, left: 100 }}
         onClick={onClick}
       >
-        ㅎㅇㅎㅇ
+        좌표 정보 출력
       </button>
     </>
   );
