@@ -1,6 +1,4 @@
 import { render, fireEvent, screen } from '@testing-library/react';
-import { expect } from '@jest/globals';
-
 import ComponentForTest from '../components/ComponentForTest';
 
 it('테스트 문구', async () => {
