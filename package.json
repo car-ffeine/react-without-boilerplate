@@ -7,7 +7,7 @@
     "test": "jest",
     "start": "webpack-dev-server --open --mode development --hot --port 3000",
     "build": "webpack --mode production",
-    "cypress:open": "cypress open"
+    "cypress": "cypress open"
   },
   "keywords": [],
   "author": "",
