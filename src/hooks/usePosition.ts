@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 interface Position {
-  latitude: number;
-  longitude: number;
+  lat: number;
+  lng: number;
 }
 
 export const usePosition = () => {
@@ -12,8 +12,8 @@ export const usePosition = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setPosition({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
         });
       },
       () => {
