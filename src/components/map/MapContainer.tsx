@@ -1,31 +1,5 @@
 import { Status, Wrapper } from '@googlemaps/react-wrapper';
-import { useEffect, useRef } from 'react';
-import { usePosition } from '../../hooks/usePosition';
-import { useSetExternalState } from '../../utils/useExternalState';
-import { mapStore } from './mapStore';
-
-const MyMap = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const initialCenterPosition = usePosition();
-
-  const setMap = useSetExternalState(mapStore);
-
-  useEffect(() => {
-    if (initialCenterPosition === undefined) return;
-
-    if (ref.current) {
-      const map = new window.google.maps.Map(ref.current, {
-        center: initialCenterPosition,
-        zoom: 16,
-        disableDefaultUI: true,
-      });
-
-      setMap(map);
-    }
-  }, [initialCenterPosition]);
-
-  return <div ref={ref} id="map"></div>;
-};
+import CaffeineMap from './CaffeineMap';
 
 const render = (status: Status) => {
   switch (status) {
@@ -34,10 +8,12 @@ const render = (status: Status) => {
     case Status.FAILURE:
       return <>에러 발생</>;
     case Status.SUCCESS:
-      return <MyMap />;
+      return <CaffeineMap />;
   }
 };
 
-const MapContainer = () => <Wrapper apiKey={process.env.GOOGLE_MAP_API_KEY} render={render} />;
+function MapContainer() {
+  return <Wrapper apiKey={process.env.GOOGLE_MAP_API_KEY} render={render} />;
+}
 
 export default MapContainer;
