@@ -1,13 +1,11 @@
 import { GlobalStyle } from './style/GlobalStyle';
-import MapApp from './components/MyMap';
-import ComponentForTest from './components/ComponentForTest';
+import MapContainer from './components/map/MapContainer';
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <MapApp />
-      <ComponentForTest />
+      <MapContainer />
     </>
   );
 }
