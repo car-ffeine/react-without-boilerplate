@@ -6,8 +6,6 @@ interface Props {
 }
 
 function MarkerContainer({ stations }: Props) {
-  console.log(stations);
-
   return (
     <>
       {stations.map((station) => (

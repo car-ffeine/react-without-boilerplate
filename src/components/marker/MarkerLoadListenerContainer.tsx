@@ -9,30 +9,24 @@ interface Props {
   map: google.maps.Map;
 }
 
-const EVENT_NAMES = ['dragend', 'zoom_changed'];
+const EVENT_NAMES = ['dragend', 'zoom_changed', 'bounds_changed'];
 
 function MarkerLoadListenerContainer({ map }: Props) {
   const setStations = useSetExternalState(stationStore);
 
   useEffect(() => {
     EVENT_NAMES.forEach((name) => {
-      map.addListener(name, () => {
+      const markerLoadListener = map.addListener(name, () => {
         const displayPosition = getDisplayPosition(map);
 
         axios
           .post<Station[]>('/stations', displayPosition)
           .then((response) => setStations(response.data));
+
+        if (name === 'bounds_changed') {
+          markerLoadListener.remove();
+        }
       });
-    });
-
-    const initalMarkerLoadListener = map.addListener('bounds_changed', () => {
-      const displayPosition = getDisplayPosition(map);
-
-      axios
-        .post<Station[]>('/stations', displayPosition)
-        .then((response) => setStations(response.data));
-
-      initalMarkerLoadListener.remove();
     });
   }, []);
 
