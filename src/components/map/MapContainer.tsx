@@ -1,5 +1,5 @@
 import { Status, Wrapper } from '@googlemaps/react-wrapper';
-import CaffeineMap from './CaffeineMap';
+import CarFfeineMap from './CarFfeineMap';
 
 const render = (status: Status) => {
   switch (status) {
@@ -8,7 +8,7 @@ const render = (status: Status) => {
     case Status.FAILURE:
       return <>에러 발생</>;
     case Status.SUCCESS:
-      return <CaffeineMap />;
+      return <CarFfeineMap />;
   }
 };
 

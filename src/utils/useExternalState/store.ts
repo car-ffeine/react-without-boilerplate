@@ -1,4 +1,4 @@
-import { ExternalStore } from './types';
+import { ExternalStore } from '../../types';
 
 export class Store<T> implements ExternalStore<T> {
   public state: T;
