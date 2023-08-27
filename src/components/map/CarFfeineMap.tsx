@@ -1,18 +1,16 @@
 import { useEffect, useRef } from 'react';
-import { usePosition } from '../../hooks/usePosition';
+import { useCurrentPosition } from '../../hooks/useCurrentPosition';
 import { useExternalState, useExternalValue } from '../../utils/useExternalState';
 import { mapStore } from '../../store/mapStore';
 import MarkerContainer from '../marker/MarkerContainer';
 import MarkerLoadListenerContainer from '../marker/MarkerLoadListenerContainer';
-import { stationStore } from '../../store/stationStore';
 
 function CarFfeineMap() {
   const ref = useRef<HTMLDivElement>(null);
 
   const [map, setMap] = useExternalState(mapStore);
-  const stations = useExternalValue(stationStore);
 
-  const initialCenterPosition = usePosition();
+  const initialCenterPosition = useCurrentPosition();
 
   useEffect(() => {
     if (ref.current && initialCenterPosition) {
@@ -29,8 +27,12 @@ function CarFfeineMap() {
   return (
     <>
       <div ref={ref} id="map"></div>
-      {map && <MarkerLoadListenerContainer map={map} />}
-      {stations && <MarkerContainer stations={stations} />}
+      {map && (
+        <>
+          <MarkerLoadListenerContainer map={map} />
+          <MarkerContainer map={map} />
+        </>
+      )}
     </>
   );
 }

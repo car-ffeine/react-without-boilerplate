@@ -5,7 +5,7 @@ interface Position {
   lng: number;
 }
 
-export const usePosition = () => {
+export const useCurrentPosition = () => {
   const [position, setPosition] = useState<Position>();
 
   useEffect(() => {

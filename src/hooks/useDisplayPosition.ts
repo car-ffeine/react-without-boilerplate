@@ -1,6 +1,6 @@
-import { DisplayPosition } from '../../types';
+import { DisplayPosition } from '../types';
 
-export const getDisplayPosition = (map: google.maps.Map): DisplayPosition => {
+export const useDisplayPosition = (map: google.maps.Map): DisplayPosition => {
   const bounds = map.getBounds();
   const center = map.getCenter();
 
